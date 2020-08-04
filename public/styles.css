@@ -1,0 +1,26 @@
+body {
+  background-color: rgb(250, 250, 250);
+}
+
+.inline {
+  display: inline-block;
+}
+
+.todo {
+  max-width: 400px;
+  display: flex;
+  justify-content: center;
+  margin: 5px;
+  padding: 4px;
+  border: 1px solid grey;
+  border-radius: 3px;
+  background-color: white;
+}
+
+.todo--left {
+  width: 60%;
+}
+
+.todo--right {
+  width: 40%;
+}
