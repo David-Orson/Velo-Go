@@ -5,9 +5,23 @@ import ToDo from "./ToDo";
 
 const ToDoList = () => {
   const [text, setText] = useState("");
-  const [toDos, setToDos] = useState(["take trash", "walk dog"]);
+  const [toDos, setToDos] = useState([
+    { body: "take trash", id: 1 },
+    { body: "walk dog", id: 2 },
+  ]);
 
-  const toDosMarkup = toDos.map((todo) => <ToDo value={todo} key={uuid()} />);
+  const deleteToDo = (id, toDos, setToDos) => {
+    setToDos(toDos.filter((toDo) => toDo.id != id));
+  };
+
+  const toDosMarkup = toDos.map((todo) => (
+    <ToDo
+      value={todo.body}
+      key={todo.id}
+      id={todo.id}
+      deleteToDo={(id) => deleteToDo(id, toDos, setToDos)}
+    />
+  ));
 
   return (
     <div>
@@ -19,7 +33,15 @@ const ToDoList = () => {
             value={text}
             onChange={(e) => setText(e.target.value)}
           ></input>
-          <button className="ui button blue">Add</button>
+          <button
+            className="ui button blue"
+            onClick={() => {
+              setToDos([...toDos, { body: text, id: uuid() }]);
+              setText("");
+            }}
+          >
+            Add
+          </button>
         </div>
         <div>{toDosMarkup}</div>
       </div>

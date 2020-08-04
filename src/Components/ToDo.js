@@ -8,8 +8,18 @@ const ToDo = (props) => {
       </div>
 
       <div className="todo--right">
-        <button className="ui button green">Done</button>
-        <button className="ui button red">X</button>
+        <button
+          className="ui button green"
+          onClick={() => props.deleteToDo(props.id)}
+        >
+          Done
+        </button>
+        <button
+          className="ui button red"
+          onClick={() => props.deleteToDo(props.id)}
+        >
+          X
+        </button>
       </div>
     </div>
   );
