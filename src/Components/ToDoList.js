@@ -1,27 +1,39 @@
 import React, { useState } from "react";
 import { v4 as uuid } from "uuid";
 
+import { addToDo, deleteToDo } from "../redux/actions/dataActions";
+import { useSelector, useDispatch } from "react-redux";
+
 import ToDo from "./ToDo";
 
 const ToDoList = () => {
   const [text, setText] = useState("");
-  const [toDos, setToDos] = useState([
-    { body: "take trash", id: 1 },
-    { body: "walk dog", id: 2 },
-  ]);
+  const dispatch = useDispatch();
 
-  const deleteToDo = (id, toDos, setToDos) => {
-    setToDos(toDos.filter((toDo) => toDo.id !== id));
-  };
+  const toDos = useSelector((state) => state.toDos);
+
+  const setToDo = (toDo) => dispatch(addToDo(toDo));
+
+  const deleteSelectedToDo = (id) => dispatch(deleteToDo(id));
 
   const toDosMarkup = toDos.map((todo) => (
     <ToDo
-      value={todo.body}
+      body={todo.body}
       key={todo.id}
       id={todo.id}
-      deleteToDo={(id) => deleteToDo(id, toDos, setToDos)}
+      deleteSelectedToDo={deleteSelectedToDo}
     />
   ));
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (text.trim() === "") return;
+    setToDo({
+      id: uuid(),
+      body: text,
+    });
+    setText("");
+  };
 
   return (
     <div>
@@ -33,13 +45,7 @@ const ToDoList = () => {
             value={text}
             onChange={(e) => setText(e.target.value)}
           ></input>
-          <button
-            className="ui button blue"
-            onClick={() => {
-              setToDos([...toDos, { body: text, id: uuid() }]);
-              setText("");
-            }}
-          >
+          <button className="ui button blue" onClick={onSubmit}>
             Add
           </button>
         </div>
