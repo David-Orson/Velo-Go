@@ -11,7 +11,7 @@ const ToDoList = () => {
   ]);
 
   const deleteToDo = (id, toDos, setToDos) => {
-    setToDos(toDos.filter((toDo) => toDo.id != id));
+    setToDos(toDos.filter((toDo) => toDo.id !== id));
   };
 
   const toDosMarkup = toDos.map((todo) => (
